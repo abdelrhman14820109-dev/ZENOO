@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ZENO Store | لوحة التاجر</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#080a0f;color:#f7f8fb}
+button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+#login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 20% 10%,#302515,#080a0f 45%)}
+.login-card{width:min(430px,100%);background:#11141b;border:1px solid #2b303b;border-radius:26px;padding:34px;box-shadow:0 30px 90px #000b;text-align:center}
+.logo{width:70px;height:70px;margin:auto;border-radius:21px;display:grid;place-items:center;background:linear-gradient(135deg,#ffd166,#ff7b00);color:#111;font-weight:1000;font-size:28px}
+.login-card h1{margin:18px 0 6px}.muted{color:#8992a1}.field{margin:20px 0;text-align:right}.field label{display:block;color:#b9c0cb;margin-bottom:8px}
+input{width:100%;padding:14px;border-radius:13px;border:1px solid #303641;background:#0c0f15;color:#fff;outline:none}input:focus{border-color:#ffae2b}
+.primary{width:100%;padding:14px;border:0;border-radius:13px;background:linear-gradient(135deg,#ffd166,#ff7b00);color:#111;font-weight:900}
+#error{color:#ff7070;margin-top:12px}.top{height:72px;background:#10131a;border-bottom:1px solid #242a34;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900}.brand-i{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:#ff9d00;color:#111}
+.logout{background:#171b23;color:#fff;border:1px solid #343b47;padding:10px 15px;border-radius:10px}
+.wrap{max-width:1250px;margin:auto;padding:28px 18px}.hero{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}.hero h2{font-size:30px;margin:0 0 6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}.stat,.panel{background:#11141b;border:1px solid #252b35;border-radius:19px}.stat{padding:19px}.stat span{color:#8992a1}.stat b{display:block;font-size:27px;margin-top:8px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.panel{padding:20px}.panel h3{margin:0 0 16px}.add-box{display:grid;grid-template-columns:1fr 150px;gap:10px}
+.file-label{display:flex;align-items:center;justify-content:center;gap:8px;border:1px dashed #454d5a;border-radius:13px;padding:14px;color:#c9ced6;background:#0c0f15;cursor:pointer;margin-top:10px}
+.file-label input{display:none}.preview{display:none;margin-top:10px;max-height:190px;width:100%;object-fit:cover;border-radius:13px;border:1px solid #303641}
+.publish{width:100%;margin-top:12px;padding:14px;border:0;border-radius:12px;background:#20bd72;color:#06130c;font-weight:900}
+.products{display:grid;gap:11px;margin-top:18px;max-height:450px;overflow:auto}.product{display:flex;align-items:center;gap:12px;background:#0c0f15;border:1px solid #252b35;border-radius:14px;padding:10px}
+.product img{width:62px;height:62px;object-fit:cover;border-radius:11px;background:#1a1e27}.product-info{flex:1}.price{color:#ffb52e;font-weight:900;margin-top:5px}
+.orders{display:grid;gap:12px;max-height:530px;overflow:auto}.order{background:#0c0f15;border:1px solid #252b35;border-radius:14px;padding:15px}.order-head{display:flex;justify-content:space-between;gap:10px}.badge{background:#203426;color:#75ffad;border-radius:999px;padding:5px 9px;font-size:12px}
+.empty{text-align:center;color:#77808e;padding:28px}.toast{position:fixed;bottom:20px;left:20px;background:#181d25;border:1px solid #39414d;padding:13px 17px;border-radius:12px;display:none;z-index:10}
+@media(max-width:850px){.grid,.stats{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.add-box{grid-template-columns:1fr}.top{padding:0 14px}}
+</style>
+</head>
+<body>
+
+<section id="login">
+<div class="login-card">
+<div class="logo">Z</div><h1>ZENO Store</h1><div class="muted">لوحة إدارة المتجر</div>
+<div class="field"><label>كلمة مرور التاجر</label><input id="pass" type="password" placeholder="أدخل كلمة المرور"></div>
+<button class="primary" id="loginBtn">دخول إلى لوحة التحكم</button><div id="error" class="hidden">كلمة المرور غير صحيحة</div>
+</div>
+</section>
+
+<section id="app" class="hidden">
+<header class="top"><div class="brand"><div class="brand-i">Z</div><div>ZENO Store<br><small class="muted">Merchant Dashboard</small></div></div><button class="logout" id="logout">تسجيل خروج</button></header>
+<main class="wrap">
+<div class="hero"><div><h2>لوحة التحكم 👋</h2><div class="muted">أضف منتجاتك بصورها وتابع طلبات العملاء لحظياً</div></div></div>
+<div class="stats"><div class="stat"><span>المنتجات</span><b id="pc">0</b></div><div class="stat"><span>الطلبات</span><b id="oc">0</b></div><div class="stat"><span>Firebase</span><b id="fb">●</b></div></div>
+
+<div class="grid">
+<section class="panel">
+<h3>✨ إضافة منتج جديد</h3>
+<div class="add-box"><input id="name" placeholder="اسم المنتج"><input id="price" type="number" min="0" placeholder="السعر بالجنيه"></div>
+<label class="file-label">📷 اختر صورة المنتج
+<input id="image" type="file" accept="image/*"></label>
+<img id="preview" class="preview">
+<button class="publish" id="add">نشر المنتج في المتجر</button>
+<h3 style="margin-top:27px">🛍️ المنتجات المنشورة</h3>
+<div id="products" class="products"><div class="empty">سجّل الدخول لتحميل المنتجات</div></div>
+</section>
+
+<section class="panel">
+<h3>📦 الطلبات الواردة</h3><div style="display:flex;gap:8px;margin-bottom:12px"><button class="logout" id="allOrdersBtn">الكل</button><button class="logout" id="doneOrdersBtn">تم التسليم</button><button class="logout" id="pendingOrdersBtn">لم يتم التسليم</button></div>
+<div id="orders" class="orders"><div class="empty">لا توجد بيانات بعد</div></div>
+</section>
+</div>
+</main>
+</section>
+<div id="toast" class="toast"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import {getFirestore,collection,addDoc,deleteDoc,doc,updateDoc,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyAKqlRuchZWDkEEl5vtpmAC5hJWQRBpawU",authDomain:"zeno-store-ee3ef.firebaseapp.com",projectId:"zeno-store-ee3ef",storageBucket:"zeno-store-ee3ef.firebasestorage.app",messagingSenderId:"136187173794",appId:"1:136187173794:web:9f80dec9561bbd5b1cb0fb",measurementId:"G-GJT5QM7G03"};
+const app=initializeApp(firebaseConfig),db=getFirestore(app);
+const $=id=>document.getElementById(id);
+function toast(x){$("toast").textContent=x;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2800)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function compressImage(file){return await new Promise((resolve,reject)=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{URL.revokeObjectURL(url);const max=700;let w=img.naturalWidth,h=img.naturalHeight;if(!w||!h)return reject(new Error('تعذر قراءة الصورة'));const scale=Math.min(1,max/Math.max(w,h));w=Math.max(1,Math.round(w*scale));h=Math.max(1,Math.round(h*scale));const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,0,0,w,h);let quality=.78,data=c.toDataURL('image/jpeg',quality);while(data.length>850000&&quality>.45){quality-=.07;data=c.toDataURL('image/jpeg',quality)}if(data.length>950000)return reject(new Error('الصورة كبيرة جداً، اختر صورة أصغر'));resolve(data)};img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('تعذر قراءة الصورة'))};img.src=url})}
+$("loginBtn").onclick=()=>{if($("pass").value==="1357"){$("login").classList.add("hidden");$("app").classList.remove("hidden");loadProducts();loadOrders()}else $("error").classList.remove("hidden")};
+$("pass").onkeydown=e=>{if(e.key==="Enter")$("loginBtn").click()};$("logout").onclick=()=>location.reload();
+$("image").onchange=()=>{const f=$("image").files[0];if(f){$("preview").src=URL.createObjectURL(f);$("preview").style.display="block"}};
+$("add").onclick=async()=>{const name=$("name").value.trim(),price=Number($("price").value),file=$("image").files[0];if(!name||!price||!file){toast("اكتب اسم المنتج والسعر واختر صورة");return}if(!file.type.startsWith("image/")){toast("الملف المختار ليس صورة");return}const btn=$("add");btn.disabled=true;btn.textContent="جاري تجهيز الصورة...";try{const imageUrl=await compressImage(file);await addDoc(collection(db,"products"),{name,price,imageUrl,createdAt:serverTimestamp()});$("name").value="";$("price").value="";$("image").value="";$("preview").style.display="none";toast("تم نشر المنتج بالصورة بنجاح ✓")}catch(e){console.error(e);toast("تعذر حفظ الصورة: "+e.message)}finally{btn.disabled=false;btn.textContent="نشر المنتج في المتجر"}};
+function loadProducts(){onSnapshot(collection(db,"products"),snap=>{const docs=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));$("pc").textContent=docs.length;$("fb").textContent="متصل ✓";const l=$("products");l.innerHTML="";if(!docs.length){l.innerHTML='<div class="empty">لا توجد منتجات منشورة</div>';return}docs.forEach(p=>{l.innerHTML+=`<div class="product"><img src="${esc(p.imageUrl||"")}" onerror="this.style.visibility='hidden'"><div class="product-info"><b>${esc(p.name||"منتج")}</b><div class="price">${Number(p.price||0).toLocaleString("ar-EG")} ج.م</div></div><button class="logout" data-del-product="${p.id}">🗑️ حذف</button></div>`});l.querySelectorAll('[data-del-product]').forEach(b=>b.onclick=async()=>{if(confirm("هل تريد حذف هذا المنتج؟")){try{await deleteDoc(doc(db,"products",b.dataset.delProduct));toast("تم حذف المنتج ✓")}catch(e){toast("تعذر حذف المنتج")}}})},e=>{$("fb").textContent="خطأ";toast("راجع قواعد Firestore")})}
+let orderFilter="all";let ordersCache=[];function renderOrders(){const docs=ordersCache.filter(o=>orderFilter==="all"||(orderFilter==="done"&&o.status==="تم التسليم")||(orderFilter==="pending"&&o.status!=="تم التسليم"));const l=$("orders");l.innerHTML="";if(!docs.length){l.innerHTML='<div class="empty">لا توجد طلبات في هذا القسم</div>';return}docs.forEach(o=>{l.innerHTML+=`<article class="order"><div class="order-head"><strong>طلب من: ${esc(o.customerName||o.name||"غير معروف")}</strong><span class="badge">${esc(o.status||"جديد")}</span></div><p>🛍️ ${esc(o.productName||o.product||"منتج")}${o.size?` • المقاس ${esc(o.size)}`:""}</p><p>💰 ${Number(o.productPrice??o.price??0).toLocaleString("ar-EG")} ج.م</p><p>📞 ${esc(o.phone||"غير متوفر")}</p><p>📍 ${esc(o.city||"")} ${esc(o.address||"غير متوفر")}</p>${o.notes?`<p>📝 ${esc(o.notes)}</p>`:""}${o.productImageUrl?`<img src="${esc(o.productImageUrl)}" style="width:70px;height:80px;object-fit:cover;border-radius:10px;margin-top:8px">`:""}<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="publish" style="width:auto;padding:9px 12px;margin:0" data-done="${o.id}">${o.status==="تم التسليم"?"↩️ إرجاع لجديد":"✅ تم التسليم"}</button><button class="logout" data-del-order="${o.id}">🗑️ حذف الطلب</button></div></article>`});l.querySelectorAll('[data-done]').forEach(b=>b.onclick=async()=>{try{await updateDoc(doc(db,"orders",b.dataset.done),{status:b.closest('.order').querySelector('.badge').textContent.trim()==="تم التسليم"?"جديد":"تم التسليم"});toast("تم تحديث حالة الطلب ✓")}catch(e){toast("تعذر تحديث الطلب")}});l.querySelectorAll('[data-del-order]').forEach(b=>b.onclick=async()=>{if(confirm("هل تريد حذف هذا الطلب نهائياً؟")){try{await deleteDoc(doc(db,"orders",b.dataset.delOrder));toast("تم حذف الطلب ✓")}catch(e){toast("تعذر حذف الطلب")}}})}function loadOrders(){onSnapshot(collection(db,"orders"),snap=>{ordersCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));$("oc").textContent=ordersCache.length;renderOrders()},e=>{console.error(e);toast("تعذر تحميل الطلبات — راجع قواعد Firestore")})}$('allOrdersBtn').onclick=()=>{orderFilter="all";renderOrders()};$('doneOrdersBtn').onclick=()=>{orderFilter="done";renderOrders()};$('pendingOrdersBtn').onclick=()=>{orderFilter="pending";renderOrders()};
+</script></body></html>
