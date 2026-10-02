@@ -28,6 +28,16 @@ input{width:100%;padding:14px;border-radius:13px;border:1px solid #303641;backgr
 .empty{text-align:center;color:#77808e;padding:28px}.toast{position:fixed;bottom:20px;left:20px;background:#181d25;border:1px solid #39414d;padding:13px 17px;border-radius:12px;display:none;z-index:10}
 @media(max-width:850px){.grid,.stats{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.add-box{grid-template-columns:1fr}.top{padding:0 14px}}
 </style>
+  <script src="https://cdn.onesignal.com/sdks/webPushSDK.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "c48e81c4-f619-4e30-b7ee-0d8dedfd2dfb",
+    });
+  });
+</script>
+  
 </head>
 <body>
 
