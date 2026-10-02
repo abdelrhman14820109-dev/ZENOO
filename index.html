@@ -35,8 +35,11 @@ input{width:100%;padding:14px;border-radius:13px;border:1px solid #303641;backgr
     await OneSignal.init({
       appId: "c48e81c4-f619-4e30-b7ee-0d8dedfd2dfb",
     });
+    // طلب الإذن عند الضغط أو التفاعل
+    OneSignal.Notifications.requestPermission();
   });
 </script>
+  
   
 </head>
 <body>
